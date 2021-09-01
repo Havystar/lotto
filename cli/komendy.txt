@@ -1,2 +1,26 @@
 aws s3 mb s3://nazwabucketu --region eu-central-1 --endpoint-url http://localhost:4566
 aws --endpoint-url=http://localhost:4572 s3 ls
+
+
+aws lambda create-function --function-name test --runtime java11 --handler hendler.S3EventHandler --zip-file fileb://C:\Users\kkowalczyk\Desktop\git\lotto\test\target\original-test-1.0-SNAPSHOT.jar --role arn:aws:iam::12345:role/ignoreme --endpoint-url http://localhost:4566 --region eu-central-1
+aws s3 cp examples/kupon6.txt s3://lotto/ --endpoint-url http://localhost:4566 --region eu-central-1
+aws s3 cp C:\Users\kkowalczyk\Desktop\kupon6.txt s3://lotto/ --endpoint-url http://localhost:4566 --region eu-central-1
+aws s3 ls s3://lotto/ --endpoint-url http://localhost:4566 --region eu-central-1
+
+aws lambda update-function-code --function-name test --zip-file fileb://C:\Users\kkowalczyk\Desktop\git\lotto\test\target\original-test-1.0-SNAPSHOT.jar --endpoint-url http://localhost:4566 --region eu-central-1
+aws logs tail --since 2d /aws/lambda/test --region eu-central-1 --endpoint-url http://localhost:4566
+aws logs describe-log-groups --query logGroups[*].logGroupName ["/aws/lambda/test2"]
+awslogs get /aws/lambda/ShortenStack-mutationShortenLambdaBC1758AD-6KW0KAD3TYVE
+aws --endpoint-url=http://localhost:4566 logs describe-log-groups
+aws --endpoint-url=http://localhost:4566 logs describe-log-streams --log-group-name /aws/lambda/test2
+aws --endpoint-url=http://localhost:4566 logs get-log-events --log-group-name /aws/lambda/test2 --log-stream-name 2021/08/31/[LATEST]1de7b104
+aws s3api put-bucket-notification-configuration --bucket lotto --notification-configuration file://C:\Users\kkowalczyk\Desktop\s3hook.json --endpoint-url http://localhost:4566
+aws logs tail --since 2d /aws/lambda/test --region eu-central-1 --endpoint-url http://localhost:4566
+ 
+
+aws --endpoint-url=http://localhost:4566 logs delete-log-group --log-group-name /aws/lambda/test
+aws --endpoint-url=http://localhost:4566 sqs create-queue --queue- qsq
+aws --endpoint-url=http://localhost:4566 lambda list-functions
+
+aws sqs receive-message --queue-url http://localstack:4566/000000000000/qsq --attribute-names All --message-attribute-names All --max-number-of-messages 10 --region eu-central-1 --endpoint-url http://localhost:4566
+aws --endpoint-url=http://localhost:4566 sqs get-queue-attributes --queue-url http://localstack:4566/000000000000/qsq --attribute-names All

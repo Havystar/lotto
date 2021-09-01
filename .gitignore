@@ -16,6 +16,7 @@ lambda/.idea
 lambda/*.iws
 lambda/*.iml
 lambda/*.ipr
+test/.idea
 
 ### NetBeans ###
 /nbproject/private/
