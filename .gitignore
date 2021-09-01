@@ -11,6 +11,7 @@ application/.idea
 application/*.iws
 application/*.iml
 application/*.ipr
+application/postgres-data/*
 lambda/.idea
 lambda/*.iws
 lambda/*.iml
