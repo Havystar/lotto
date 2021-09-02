@@ -1,5 +1,8 @@
 HELP.md
 application/target/
+application/gen
+test/gen
+test/target
 application/!.mvn/wrapper/maven-wrapper.jar
 lambda/target/
 lambda/!.mvn/wrapper/maven-wrapper.jar
@@ -16,7 +19,9 @@ lambda/.idea
 lambda/*.iws
 lambda/*.iml
 lambda/*.ipr
+
 test/.idea
+
 
 ### NetBeans ###
 /nbproject/private/

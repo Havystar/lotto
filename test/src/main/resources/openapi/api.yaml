@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: ClaimParts DamageReportService
+paths:
+  /bet:
+    post:
+      summary: Add new bet
+      operationId: addBet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bet'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bet'
+    get:
+      summary: get bets
+      operationId: get bets
+      parameters:
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: 'id'
+        - name: order
+          in: query
+          schema:
+            type: string
+            default: 'desc'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 50
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BetList'
+  /draw:
+    post:
+      summary: Run draw
+      operationId: runDraw
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrawSummary'
+components:
+  schemas:
+    BetList:
+      type: object
+      properties:
+        startElement:
+          type: integer
+          format: int64
+        totalCount:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Bet"
+    Bet:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        creationDate:
+          type: string
+          format: date-time
+        dayOfDraw:
+          type: string
+          format: date-time
+        coupons:
+          type: array
+          items:
+            $ref: "#/components/schemas/Coupon"
+        payment:
+          type: integer
+          format: int64
+    Coupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        creationDate:
+          type: string
+          format: date-time
+        numbers:
+          type: array
+          uniqueItems: true
+          minItems: 6
+          maxItems: 6
+          items:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 49
+        numberOfHits:
+          type: integer
+          format: int32
+    DrawSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        numbers:
+          type: array
+          uniqueItems: true
+          minItems: 6
+          maxItems: 6
+          items:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 49
+        numberOf0Hits:
+          type: integer
+          format: int32
+        numberOf1Hits:
+          type: integer
+          format: int32
+        numberOf2Hits:
+          type: integer
+          format: int32
+        numberOf3Hits:
+          type: integer
+          format: int32
+        numberOf4Hits:
+          type: integer
+          format: int32
+        numberOf5Hits:
+          type: integer
+          format: int32
+        numberOf6Hits:
+          type: integer
+          format: int32
