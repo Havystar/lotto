@@ -2,8 +2,6 @@ package hendler;
 
 import aws.AWSClient;
 import aws.s3.AmazonS3Service;
-import aws.s3.dto.BetDto;
-import aws.s3.dto.CouponDto;
 import aws.sqs.AmazonSQSService;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -11,9 +9,10 @@ import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import org.example.damagereport.model.BetApi;
+import org.example.damagereport.model.CouponApi;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class S3EventHandler implements RequestHandler<S3Event, String> {
 
@@ -31,9 +30,10 @@ public class S3EventHandler implements RequestHandler<S3Event, String> {
         amazonS3Service.analyzeInput();
         amazonS3Service.moveFile();
         if(!amazonS3Service.getFail()) {
-            Set<CouponDto> set = new HashSet<>(amazonS3Service.getCoupons());
-            BetDto betDto = new BetDto(set);
-            amazonSQSService.send(betDto);
+            List<CouponApi> list = amazonS3Service.getCoupons();
+            BetApi betApi = new BetApi();
+            betApi.setCoupons(list);
+            amazonSQSService.send(betApi);
         }
         return obj.getObjectMetadata().getContentType();
     }

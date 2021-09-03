@@ -1,28 +1,23 @@
 package aws.sqs;
 
 import aws.AWSClient;
-import aws.s3.dto.BetDto;
-import aws.s3.dto.CouponDto;
+
+
 import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.model.Message;
-import com.amazonaws.services.sqs.model.SendMessageBatchRequest;
-import com.amazonaws.services.sqs.model.SendMessageBatchRequestEntry;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
-
-import java.util.List;
+import org.example.damagereport.model.BetApi;
 
 public class AmazonSQSService {
 
-    public void send(BetDto betDto) {
+    public void send(BetApi betApi) {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
         try {
-            json = ow.writeValueAsString(betDto);
+            json = ow.writeValueAsString(betApi);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -30,8 +25,7 @@ public class AmazonSQSService {
         String queueUrl = "http://localstack:4566/000000000000/sqs";
         SendMessageRequest send_msg_request = new SendMessageRequest()
                 .withQueueUrl(queueUrl)
-                .withMessageBody(json)
-                .withDelaySeconds(5);
+                .withMessageBody(json);
         sqs.sendMessage(send_msg_request);
     }
 }
